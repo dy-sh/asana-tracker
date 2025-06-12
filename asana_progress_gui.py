@@ -292,11 +292,11 @@ To get your Asana API key:
 
         # Show loading progress bar (determinate)
         self.loading_label.configure(text="Loading projects...")
-        self.loading_label.grid(row=0, column=0, padx=20, pady=50)
+        self.loading_label.grid(row=0, column=0, padx=20, pady=(50, 10))
         if hasattr(self, 'loading_progress'):
             self.loading_progress.destroy()
         self.loading_progress = ctk.CTkProgressBar(self.projects_frame, height=12, mode="determinate")
-        self.loading_progress.grid(row=1, column=0, padx=20, pady=(0, 50))
+        self.loading_progress.grid(row=1, column=0, padx=0, pady=(0, 10))
         self.loading_progress.set(0)
         if hasattr(self, 'loading_percent_label'):
             self.loading_percent_label.destroy()
@@ -495,21 +495,50 @@ To get your Asana API key:
             # Table header (no Workspace column, new order)
             table_header = ctk.CTkFrame(self.projects_frame, fg_color="transparent")
             table_header.grid(row=row, column=0, padx=20, pady=(0, 0), sticky="ew")
-            col_defs = [
-                {"text": "Project Name", "width": 240, "anchor": "w", "padx": 2},
-                {"text": "Progress", "width": 200, "anchor": "w", "padx": 2},
-                {"text": "Tasks", "width": 90, "anchor": "e", "padx": (2, 18)},
-                {"text": "Status", "width": 100, "anchor": "w", "padx": (20, 2)},
-            ]
-            for i, col in enumerate(col_defs):
-                ctk.CTkLabel(
-                    table_header,
-                    text=col["text"],
-                    font=ctk.CTkFont(size=13, weight="bold"),
-                    text_color="#bbbbbb",
-                    width=col["width"],
-                    anchor=col["anchor"]
-                ).grid(row=0, column=i, padx=col["padx"], pady=4, sticky=col["anchor"])
+            table_header.grid_columnconfigure(1, weight=1)  # Make progress column expandable
+            
+            # Column definitions (widths must match data rows)
+            col_defs = [240, 200, 90, 100]
+            
+            # Project Name
+            ctk.CTkLabel(
+                table_header,
+                text="Project Name",
+                font=ctk.CTkFont(size=13, weight="bold"),
+                text_color="#bbbbbb",
+                width=col_defs[0],
+                anchor="w"
+            ).grid(row=0, column=0, padx=2, pady=4, sticky="w")
+            
+            # Progress
+            ctk.CTkLabel(
+                table_header,
+                text="Progress",
+                font=ctk.CTkFont(size=13, weight="bold"),
+                text_color="#bbbbbb",
+                width=col_defs[1],
+                anchor="w"
+            ).grid(row=0, column=1, padx=2, pady=4, sticky="w")
+            
+            # Tasks
+            ctk.CTkLabel(
+                table_header,
+                text="Tasks",
+                font=ctk.CTkFont(size=13, weight="bold"),
+                text_color="#bbbbbb",
+                width=col_defs[2],
+                anchor="e"
+            ).grid(row=0, column=2, padx=(2, 18), pady=4, sticky="e")
+            
+            # Status
+            ctk.CTkLabel(
+                table_header,
+                text="Status",
+                font=ctk.CTkFont(size=13, weight="bold"),
+                text_color="#bbbbbb",
+                width=col_defs[3],
+                anchor="w"
+            ).grid(row=0, column=3, padx=2, pady=4, sticky="w")
             row += 1
 
             # Sort projects by percentage
