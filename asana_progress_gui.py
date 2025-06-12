@@ -43,6 +43,11 @@ class AsanaProgressTrackerGUI:
         
         # Try to load API key and connect
         self.load_api_key()
+        # Automatically refresh if API key is found and connected
+        if self.client:
+            self.refresh_data()
+        else:
+            self.show_settings()
     
     def setup_ui(self):
         """
@@ -491,10 +496,10 @@ To get your Asana API key:
             table_header = ctk.CTkFrame(self.projects_frame, fg_color="transparent")
             table_header.grid(row=row, column=0, padx=20, pady=(0, 0), sticky="ew")
             col_defs = [
-                {"text": "Project Name", "width": 240, "anchor": "w"},
-                {"text": "Progress", "width": 200, "anchor": "w"},
-                {"text": "Tasks", "width": 90, "anchor": "e"},
-                {"text": "Status", "width": 100, "anchor": "w"},
+                {"text": "Project Name", "width": 240, "anchor": "w", "padx": 2},
+                {"text": "Progress", "width": 200, "anchor": "w", "padx": 2},
+                {"text": "Tasks", "width": 90, "anchor": "e", "padx": (2, 18)},
+                {"text": "Status", "width": 100, "anchor": "w", "padx": 2},
             ]
             for i, col in enumerate(col_defs):
                 ctk.CTkLabel(
@@ -504,7 +509,7 @@ To get your Asana API key:
                     text_color="#bbbbbb",
                     width=col["width"],
                     anchor=col["anchor"]
-                ).grid(row=0, column=i, padx=(2, 18) if i == 2 else 2, pady=4, sticky=col["anchor"])
+                ).grid(row=0, column=i, padx=col["padx"], pady=4, sticky=col["anchor"])
             row += 1
 
             # Sort projects by percentage
