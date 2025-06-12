@@ -2,6 +2,8 @@
 
 A modern, cross-platform GUI application that displays progress bars for all your Asana projects with a beautiful interface. Built with CustomTkinter for Windows and macOS compatibility.
 
+![](screenshot.png)
+
 ## Features
 
 - 🖥️ **Modern GUI Interface** - Beautiful, responsive design with dark/light theme support
