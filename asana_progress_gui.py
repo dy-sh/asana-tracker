@@ -499,7 +499,7 @@ To get your Asana API key:
                 {"text": "Project Name", "width": 240, "anchor": "w", "padx": 2},
                 {"text": "Progress", "width": 200, "anchor": "w", "padx": 2},
                 {"text": "Tasks", "width": 90, "anchor": "e", "padx": (2, 18)},
-                {"text": "Status", "width": 100, "anchor": "w", "padx": 2},
+                {"text": "Status", "width": 100, "anchor": "w", "padx": (20, 2)},
             ]
             for i, col in enumerate(col_defs):
                 ctk.CTkLabel(
@@ -631,7 +631,7 @@ To get your Asana API key:
         
         # Summary grid
         summary_grid = ctk.CTkFrame(self.summary_frame)
-        summary_grid.pack(fill="x", padx=20, pady=20)
+        summary_grid.pack(fill="x", padx=20, pady=10)
         
         # Configure grid columns
         for i in range(4):
@@ -647,41 +647,41 @@ To get your Asana API key:
         
         for i, (label, value, color) in enumerate(summary_items):
             item_frame = ctk.CTkFrame(summary_grid)
-            item_frame.grid(row=0, column=i, padx=10, pady=10, sticky="ew")
+            item_frame.grid(row=0, column=i, padx=10, pady=5, sticky="ew")
             
             ctk.CTkLabel(
                 item_frame,
                 text=label,
                 font=ctk.CTkFont(size=12),
                 text_color="gray"
-            ).pack(pady=(10, 5))
+            ).pack(pady=(8, 3))
             
             ctk.CTkLabel(
                 item_frame,
                 text=value,
                 font=ctk.CTkFont(size=20, weight="bold"),
                 text_color=color
-            ).pack(pady=(0, 10))
+            ).pack(pady=(0, 8))
         
         # Overall progress
         progress_frame = ctk.CTkFrame(self.summary_frame)
-        progress_frame.pack(fill="x", padx=20, pady=(0, 20))
+        progress_frame.pack(fill="x", padx=20, pady=(0, 10))
         
         ctk.CTkLabel(
             progress_frame,
             text="Overall Progress",
             font=ctk.CTkFont(size=16, weight="bold")
-        ).pack(pady=(15, 5))
+        ).pack(pady=(12, 3))
         
         progress_bar = ctk.CTkProgressBar(progress_frame)
-        progress_bar.pack(pady=(0, 10), padx=20, fill="x")
+        progress_bar.pack(pady=(0, 8), padx=20, fill="x")
         progress_bar.set(overall_percentage / 100)
         
         ctk.CTkLabel(
             progress_frame,
             text=f"{completed_tasks}/{total_tasks} tasks completed ({overall_percentage:.1f}%)",
             font=ctk.CTkFont(size=14)
-        ).pack(pady=(0, 15))
+        ).pack(pady=(0, 12))
     
     def filter_by_workspace(self, workspace: str):
         """
